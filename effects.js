@@ -20,7 +20,7 @@
   };
   Object.assign(labels,window.LyricScenes.names);
   const keys = Object.keys(labels);
-  const fontCSS = (font, size) => `${font === 'serif' ? '700' : '900'} ${size}px ${font === 'serif' ? '"Hiragino Mincho ProN","Yu Mincho",serif' : font === 'mono' ? 'ui-monospace,Menlo,monospace' : font === 'rounded' ? '"Hiragino Maru Gothic ProN",system-ui,sans-serif' : '"Hiragino Kaku Gothic ProN",system-ui,sans-serif'}`;
+  const fontCSS = (font, size) => `${font === 'serif' ? '700' : '900'} ${size}px ${window.LyricFonts.cssFamily(font) || (font === 'serif' ? '"Hiragino Mincho ProN","Yu Mincho",serif' : font === 'mono' ? 'ui-monospace,Menlo,monospace' : font === 'rounded' ? '"Hiragino Maru Gothic ProN",system-ui,sans-serif' : '"Hiragino Kaku Gothic ProN",system-ui,sans-serif')}`;
   const fontFace = (font) => fontCSS(font, 12).replace(/^\d+ \d+px /, '');
 
   function linesFor(ctx, text, maxWidth) {

@@ -15,7 +15,7 @@
     const cut=Math.ceil(arr.length*.52);
     return {hero:arr.slice(0,cut).join(''),top:'',bottom:arr.slice(cut).join(''),clean};
   }
-  function font(font,size){return `900 ${size}px ${font==='serif'?'"Hiragino Mincho ProN","Yu Mincho",serif':font==='mono'?'ui-monospace,monospace':'"Hiragino Kaku Gothic ProN",system-ui,sans-serif'}`}
+  function font(font,size){return `900 ${size}px ${window.LyricFonts.cssFamily(font)||(font==='serif'?'"Hiragino Mincho ProN","Yu Mincho",serif':font==='mono'?'ui-monospace,monospace':'"Hiragino Kaku Gothic ProN",system-ui,sans-serif')}`}
   function fitted(ctx,text,maxWidth,size,min){let s=size;ctx.font=font(activeFace,s);while(s>min&&ctx.measureText(text).width>maxWidth){s-=2;ctx.font=font(activeFace,s)}return s}
   function supporting(ctx,text,x,y,maxWidth,size,color,align='center'){
     if(!text)return;ctx.save();ctx.textBaseline='middle';ctx.textAlign=align;

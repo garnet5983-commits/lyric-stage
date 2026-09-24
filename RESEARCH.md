@@ -21,3 +21,10 @@ The earlier editor treated a lyric line as one centered block and varied only it
 ## Still needed for high-end results
 
 A polished full-song result requires accurate phrase and word timestamps, a deliberate storyboard, typography choices suited to the particular song, and verification on the intended iPhone. Automatic style selection here is an editable starting point, not a substitute for directing those decisions. The video export also remains dependent on the phone browser's recording support.
+
+## フォントと図形による構図（2026-09-24）
+
+- School of Motion の Design Kickstart は形、余白、階層、グリッド、色の設計を重視する。図形を動く背景として足すだけでは歌詞が主役にならないため、セルごとに一文字を置くグリッド、語を型抜きするステンシル、字形を読める前景に保つ8種の図形演出を実装。https://schoolofmotion.com/courses/design-kickstart
+- 同校の kinetic typography 教材は音への同期、レイヤー、弧を描く動き、形状マットなどを扱う。曲のピーク値による線や図形の反応と、形状で文字の透過領域を作る手法を採用。https://schoolofmotion.com/blog/kinetic-typography-after-effects-part-1 ; https://schoolofmotion.com/blog/kinetic-typography-after-effects-part-2
+- Google Fonts の CSS API は `text=` で必要な文字だけを要求できる。30種類の日本語フォントを選択時に読み込み、CacheStorageに保存。ブラウザのフォント読み込みに失敗するときは既存のOSフォントを使う。https://developers.google.com/fonts/docs/css2
+- 実装の注意：歌詞の字形をWebフォント要求時に Google Fonts に送る。インターネットに接続していないと初回のフォント取得はできない。曲や映像は送らない。
