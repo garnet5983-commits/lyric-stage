@@ -18,6 +18,7 @@
     cinema:'シネマ', punch:'インパクト', kinetic:'文字ごと', neon:'ネオン', editorial:'エディトリアル', echo:'残像', wipe:'ワイプ', split:'スプリット', spotlight:'スポット', karaoke:'カラー進行', minimal:'ミニマル',
     float:'ゆっくり漂う', heartbeat:'鼓動', jitter:'細かく震える', chromatic:'RGB色ずれ', glitch:'グリッチ', orbit:'軌道を描く', ripple:'文字の波', bounce:'跳ねる', spin:'揺れる回転', cascade:'連鎖', scroll:'横スライド', flip:'反転', laser:'レーザースキャン', breathing:'呼吸', dance:'踊る文字', tilt:'傾く', flash:'光の爆発', rain:'文字の雨', trace:'なぞり塗り', smear:'スピード残像'
   };
+  Object.assign(labels,window.LyricScenes.names);
   const keys = Object.keys(labels);
   const fontCSS = (font, size) => `${font === 'serif' ? '700' : '900'} ${size}px ${font === 'serif' ? '"Hiragino Mincho ProN","Yu Mincho",serif' : font === 'mono' ? 'ui-monospace,Menlo,monospace' : font === 'rounded' ? '"Hiragino Maru Gothic ProN",system-ui,sans-serif' : '"Hiragino Kaku Gothic ProN",system-ui,sans-serif'}`;
   const fontFace = (font) => fontCSS(font, 12).replace(/^\d+ \d+px /, '');
@@ -80,12 +81,13 @@
     const w=canvas.width,h=canvas.height,u=Math.min(w,h)/540;
     const theme=themes[themeName]||themes.cinema;
     const effect=keys.includes(phrase.effect)?phrase.effect:'cinema';
+    if(effect.startsWith('scene_')){window.LyricScenes.render({ctx,canvas,phrase,time,life,font,fontSize,color,theme,intensity,pulse});return}
     const local=Math.max(0,time-phrase.start),tail=clamp((life-local)/.27),entry=ease(local/(effect==='minimal'?.42:.56));
     const amp=clamp(Number(intensity)/100||.7,.1,1.5);
     const p=clamp(pulse||0),ink=color||theme.ink,accent=phrase.color||theme.accent;
     let size=fontSize*u, lineHeight=size*1.21;ctx.font=fontCSS(font,size);
-    let lines=linesFor(ctx,phrase.text,w*(effect==='editorial'?.71:.82));
-    while(lines.length>3 && size>24*u){size*=.92;ctx.font=fontCSS(font,size);lines=linesFor(ctx,phrase.text,w*.82)}
+    let lines=linesFor(ctx,phrase.text.replace(/[【】]/g,''),w*(effect==='editorial'?.71:.82));
+    while(lines.length>3 && size>24*u){size*=.92;ctx.font=fontCSS(font,size);lines=linesFor(ctx,phrase.text.replace(/[【】]/g,''),w*.82)}
     lineHeight=size*1.19;
     const cy=h*(effect==='minimal'?.76:effect==='editorial'?.51:.53);
     const cx=effect==='editorial'?w*.5:w*.5;
